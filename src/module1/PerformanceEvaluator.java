@@ -42,15 +42,10 @@ class PerformanceEvaluator {
             int randomInt = randomGenerator.nextInt(collectionSize);
             switch (operation) {
                 case ADD:
-                    if (collection.getClass().getSimpleName().equals("ArrayList")) {
-                        ArrayList arrayList = (ArrayList) collection;
+                    if (collection.getClass().getSimpleName().equals("ArrayList") ||
+                        collection.getClass().getSimpleName().equals("LinkedList")) {
                         long start = System.nanoTime();
-                        arrayList.add(randomInt, randomInt);
-                        sum += System.nanoTime() - start;
-                    } else if (collection.getClass().getSimpleName().equals("LinkedList")) {
-                        LinkedList linkedList = (LinkedList) collection;
-                        long start = System.nanoTime();
-                        linkedList.add(randomInt, randomInt);
+                        ((List) collection).add(randomInt, randomInt);
                         sum += System.nanoTime() - start;
                     } else {
                         long start = System.nanoTime();
@@ -59,6 +54,9 @@ class PerformanceEvaluator {
                     }
                     break;
                 case GET:
+                    long start = System.nanoTime();
+                    ((List) collection).get(randomInt);
+                    sum += System.nanoTime() - start;
                     break;
                 case REMOVE:
                     break;
