@@ -28,6 +28,7 @@ public class ReportGenerator {
                         PerformanceEvaluator.evaluate(CollectionType.ARRAY_LIST, Operation.POPULATE),
                         PerformanceEvaluator.evaluate(CollectionType.ARRAY_LIST, Operation.LIST_ITERATOR_ADD),
                         PerformanceEvaluator.evaluate(CollectionType.ARRAY_LIST, Operation.LIST_ITERATOR_REMOVE)));
+                addSeparator();
                 break;
             case LINKED_LIST:
                 report.append(String.format(leftAlignFormat, "LinkedList",
@@ -38,6 +39,7 @@ public class ReportGenerator {
                         PerformanceEvaluator.evaluate(CollectionType.LINKED_LIST, Operation.POPULATE),
                         PerformanceEvaluator.evaluate(CollectionType.LINKED_LIST, Operation.LIST_ITERATOR_ADD),
                         PerformanceEvaluator.evaluate(CollectionType.LINKED_LIST, Operation.LIST_ITERATOR_REMOVE)));
+                addSeparator();
                 break;
             case HASH_SET:
                 report.append(String.format(leftAlignFormat, "HashSet",
@@ -48,6 +50,7 @@ public class ReportGenerator {
                         PerformanceEvaluator.evaluate(CollectionType.HASH_SET, Operation.POPULATE),
                         "-",
                         "-"));
+                addSeparator();
                 break;
             case TREE_SET:
                 report.append(String.format(leftAlignFormat, "TreeSet",
@@ -58,17 +61,16 @@ public class ReportGenerator {
                         PerformanceEvaluator.evaluate(CollectionType.TREE_SET, Operation.POPULATE),
                         "-",
                         "-"));
+                addSeparator();
                 break;
         }
     }
 
     public void printTable() {
-        addFooter();
         System.out.println(report.toString());
     }
 
     public void saveToFile(String fileName) {
-        addFooter();
         try (PrintWriter out = new PrintWriter(fileName)) {
             out.print(report);
         } catch (FileNotFoundException e) {
@@ -76,7 +78,7 @@ public class ReportGenerator {
         }
     }
 
-    private void addFooter() {
+    private void addSeparator() {
         report.append(String
                 .format("+----------+----------+----------+----------+----------+----------+--------------+-----------------+%n"));
     }

@@ -11,6 +11,5 @@ public class Main {
         rp.addRow(CollectionType.TREE_SET);
         rp.saveToFile("report.txt");
         rp.printTable();
-
     }
 }
