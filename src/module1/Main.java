@@ -11,7 +11,8 @@ public class Main {
         rp.addRow(CollectionType.LINKED_LIST);
         rp.addRow(CollectionType.HASH_SET);
         rp.addRow(CollectionType.TREE_SET);
-        rp.printTable();
+        rp.saveToFile("report.txt");
+//        rp.printTable();
 
 //        System.out.println(PerformanceEvaluator.evaluate(CollectionType.ARRAY_LIST, Operation.ADD));
 //        System.out.println(PerformanceEvaluator.evaluate(CollectionType.LINKED_LIST, Operation.ADD));

@@ -1,5 +1,9 @@
 package module1;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class ReportGenerator {
 
     private static final StringBuilder report = new StringBuilder();
@@ -64,7 +68,13 @@ public class ReportGenerator {
         System.out.println(report.toString());
     }
 
-    public void saveToTable(String fileName) {
+    public void saveToFile(String fileName) {
+        addFooter();
+        try (PrintWriter out = new PrintWriter(fileName)) {
+            out.print(report);
+        } catch (FileNotFoundException e) {
+            System.err.println("File Not Found" + e.toString());
+        }
     }
 
     private void addFooter() {
