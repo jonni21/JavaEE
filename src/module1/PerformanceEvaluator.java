@@ -99,5 +99,4 @@ class PerformanceEvaluator {
         }
         return c;
     }
-
 }
