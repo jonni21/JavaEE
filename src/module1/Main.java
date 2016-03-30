@@ -6,10 +6,17 @@ public class Main {
 
     public static void main(String[] args) {
 
+        ReportGenerator rp = new ReportGenerator();
+        rp.addRow(CollectionType.ARRAY_LIST);
+        rp.addRow(CollectionType.LINKED_LIST);
+        rp.addRow(CollectionType.HASH_SET);
+        rp.addRow(CollectionType.TREE_SET);
+        rp.printTable();
+
 //        System.out.println(PerformanceEvaluator.evaluate(CollectionType.ARRAY_LIST, Operation.ADD));
 //        System.out.println(PerformanceEvaluator.evaluate(CollectionType.LINKED_LIST, Operation.ADD));
-        System.out.println(PerformanceEvaluator.evaluate(CollectionType.ARRAY_LIST, Operation.GET));
-        System.out.println(PerformanceEvaluator.evaluate(CollectionType.LINKED_LIST, Operation.GET));
+//        System.out.println(PerformanceEvaluator.evaluate(CollectionType.ARRAY_LIST, Operation.GET));
+//        System.out.println(PerformanceEvaluator.evaluate(CollectionType.LINKED_LIST, Operation.GET));
 
 
 
