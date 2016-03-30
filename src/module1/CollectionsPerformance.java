@@ -17,7 +17,7 @@ public class CollectionsPerformance {
 //                }
 //                return sum / NUM_OF_CALCULATIONS;
 //            }
-//        }, GET, REMOVE, CONTAINS, POPULATE, ITERATOR_ADD, ITERATOR_REMOVE {};
+//        }, GET, REMOVE, CONTAINS, POPULATE, LIST_ITERATOR_ADD, LIST_ITERATOR_REMOVE {};
 //
 //        private final static int NUM_OF_CALCULATIONS = 200;
 //        }

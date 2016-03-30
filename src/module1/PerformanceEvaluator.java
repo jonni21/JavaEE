@@ -37,36 +37,55 @@ class PerformanceEvaluator {
 
     private static long calculatePerformance(Collection collection, Operation operation, int collectionSize) {
         long sum = 0;
+        long start;
+        ListIterator listIterator = ((List) collection).listIterator();
 
         for (int i = 0; i < NUM_OF_REPETITIONS; i++) {
             int randomInt = randomGenerator.nextInt(collectionSize);
+
             switch (operation) {
                 case ADD:
                     if (collection.getClass().getSimpleName().equals("ArrayList") ||
                         collection.getClass().getSimpleName().equals("LinkedList")) {
-                        long start = System.nanoTime();
+                        start = System.nanoTime();
                         ((List) collection).add(randomInt, randomInt);
                         sum += System.nanoTime() - start;
                     } else {
-                        long start = System.nanoTime();
+                        start = System.nanoTime();
                         collection.add(randomInt);
                         sum += System.nanoTime() - start;
                     }
                     break;
                 case GET:
-                    long start = System.nanoTime();
+                    start = System.nanoTime();
                     ((List) collection).get(randomInt);
                     sum += System.nanoTime() - start;
                     break;
                 case REMOVE:
+                    start = System.nanoTime();
+                    collection.remove(randomInt);
+                    sum += System.nanoTime() - start;
                     break;
                 case CONTAINS:
+                    start = System.nanoTime();
+                    collection.contains(randomInt);
+                    sum += System.nanoTime() - start;
                     break;
                 case POPULATE:
+                    start = System.nanoTime();
+                    init(collection, collectionSize);
+                    sum += System.nanoTime() - start;
                     break;
-                case ITERATOR_ADD:
+                case LIST_ITERATOR_ADD:
+                    start = System.nanoTime();
+                    listIterator.add(randomInt);
+                    sum += System.nanoTime() - start;
                     break;
-                case ITERATOR_REMOVE:
+                case LIST_ITERATOR_REMOVE:
+                    listIterator.next();
+                    start = System.nanoTime();
+                    listIterator.remove();
+                    sum += System.nanoTime() - start;
                     break;
             }
         }
