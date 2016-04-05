@@ -53,7 +53,7 @@ class PerformanceEvaluator {
                         sum += System.nanoTime() - start;
                     }
                     break;
-                case GET:
+                case GET: // Is used only with Lists, so we do casting to List here
                     start = System.nanoTime();
                     ((List) collection).get(randomInt);
                     sum += System.nanoTime() - start;
