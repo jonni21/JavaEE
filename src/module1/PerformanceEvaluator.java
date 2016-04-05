@@ -10,23 +10,23 @@ class PerformanceEvaluator {
     public static long evaluate(CollectionType collectionType, Operation operation) {
         long sum = 0;
 
-        for (int i : COLLECTION_SIZE) {
+        for (int collectionSize : COLLECTION_SIZE) {
             switch (collectionType) {
                 case ARRAY_LIST:
-                    ArrayList arrayList = (ArrayList) init(new ArrayList(), i);
-                    sum += calculatePerformance(arrayList, operation, i);
+                    ArrayList arrayList = (ArrayList) init(new ArrayList(), collectionSize);
+                    sum += calculatePerformance(arrayList, operation, collectionSize);
                     break;
                 case LINKED_LIST:
-                    LinkedList linkedList = (LinkedList) init(new LinkedList(), i);
-                    sum += calculatePerformance(linkedList, operation, i);
+                    LinkedList linkedList = (LinkedList) init(new LinkedList(), collectionSize);
+                    sum += calculatePerformance(linkedList, operation, collectionSize);
                     break;
                 case HASH_SET:
-                    HashSet hashSet = (HashSet) init(new HashSet(), i);
-                    sum += calculatePerformance(hashSet, operation, i);
+                    HashSet hashSet = (HashSet) init(new HashSet(), collectionSize);
+                    sum += calculatePerformance(hashSet, operation, collectionSize);
                     break;
                 case TREE_SET:
-                    TreeSet treeSet = (TreeSet) init(new TreeSet(), i);
-                    sum += calculatePerformance(treeSet, operation, i);
+                    TreeSet treeSet = (TreeSet) init(new TreeSet(), collectionSize);
+                    sum += calculatePerformance(treeSet, operation, collectionSize);
                     break;
             }
         }
