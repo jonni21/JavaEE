@@ -7,6 +7,6 @@ public class NumberValidator implements Validator<Task<? extends Number>> {
     public boolean isValid(Task<? extends Number> task) {
         //возвращает true, если число четное
         task.execute();
-        return (task.getResult().longValue() & 1L) == 0L;
+        return (task.getResult().longValue() & 1) == 0;
     }
 }
