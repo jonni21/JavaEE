@@ -2,11 +2,11 @@ package module3_1;
 
 public interface Semaphore {
 
-    void acquire() throws InterruptedException;
+    void acquire() throws Exception;
     // Запрашивает разрешение. Если есть свободное захватывает его. Если нет - приостанавливает поток до тех пор пока
     // не появится свободное разрешение.
 
-    void acquire(int permits);
+    void acquire(int permits) throws Exception;
     // Запрашивает переданое количество разрешений. Если есть переданое количество свободных разрешений захватывает их.
     // Если нет - приостанавливает поток до тех пор пока не появится переданое колтчество свободных разрешений.
 

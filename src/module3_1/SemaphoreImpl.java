@@ -3,7 +3,7 @@ package module3_1;
 public class SemaphoreImpl implements Semaphore {
     private final Object lock = new Object();
     private int permitsMax = 4;
-    private volatile int permitsAvailable = permitsMax;
+    private int permitsAvailable = permitsMax;
 
     public SemaphoreImpl() {
     }
@@ -13,22 +13,29 @@ public class SemaphoreImpl implements Semaphore {
     }
 
     @Override
-    public void acquire() throws InterruptedException {
+    public void acquire() throws Exception {
+        getLock(1);
     }
 
     @Override
-    public void acquire(int permits) {
-
+    public void acquire(int permits) throws Exception {
+        getLock(permits);
     }
 
     @Override
     public void release() {
-
+        synchronized (lock) {
+            permitsAvailable += 1;
+            lock.notifyAll();
+        }
     }
 
     @Override
     public void release(int permits) {
-
+        synchronized (lock) {
+            permitsAvailable += permits;
+            lock.notifyAll();
+        }
     }
 
     @Override
@@ -37,12 +44,14 @@ public class SemaphoreImpl implements Semaphore {
     }
 
     private void getLock(int permitsRequested) throws Exception {
-        if (permitsRequested > permitsMax) {
-            throw new IllegalArgumentException("Number of permits acquired exceed max permits number!");
-        } else if (permitsAvailable >= permitsRequested) {
-            permitsAvailable -= permitsRequested;
-        } else {
-
+        synchronized (lock) {
+            if (permitsRequested > permitsMax) {
+                throw new IllegalArgumentException("Number of permits acquired exceed max permits number!");
+            } else if (permitsAvailable >= permitsRequested) {
+                permitsAvailable -= permitsRequested;
+            } else {
+                lock.wait();
+            }
         }
     }
 }
