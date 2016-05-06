@@ -20,7 +20,7 @@ public class SemaphoreTest {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Thread " + Thread.currentThread().getName() + "released 2 slots.");
+                System.out.println("Thread " + Thread.currentThread().getName() + " released 2 slots.");
                 try {
                     semaphore.release(2);
                 } catch (InterruptedException e) {
@@ -35,9 +35,9 @@ public class SemaphoreTest {
         @Override
         public void run() {
             try {
-                System.out.println("Thread " + Thread.currentThread().getName() + "requested 2 slots.");
+                System.out.println("Thread " + Thread.currentThread().getName() + " requested 2 slots.");
                 semaphore.acquire(2);
-                System.out.println("Thread " + Thread.currentThread().getName() + "got 2 slots.");
+                System.out.println("Thread " + Thread.currentThread().getName() + " got 2 slots.");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -48,7 +48,7 @@ public class SemaphoreTest {
         @Override
         public void run() {
             try {
-                System.out.println("Thread " + Thread.currentThread().getName() + "released 2 slots.");
+                System.out.println("Thread " + Thread.currentThread().getName() + " released 2 slots.");
                 semaphore.release(2);
             } catch (Exception e) {
                 e.printStackTrace();
