@@ -21,7 +21,11 @@ public class SemaphoreTest {
             @Override
             public void run() {
                 System.out.println("Thread " + Thread.currentThread().getName() + "released 2 slots.");
-                semaphore.release(2);
+                try {
+                    semaphore.release(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }
@@ -60,5 +64,4 @@ public class SemaphoreTest {
             e.printStackTrace();
         }
     }
-
 }
