@@ -11,37 +11,37 @@ public class SemaphoreImpl implements Semaphore {
     @Override
     public synchronized void acquire() throws InterruptedException {
         while (permissions >= bound) {
-            wait();
+            this.wait();
         }
         permissions++;
-        notifyAll();
+        this.notifyAll();
     }
 
     @Override
-    public void acquire(int permits) throws InterruptedException {
+    public synchronized void acquire(int permits) throws InterruptedException {
         while (permissions >= bound) {
-            wait();
+            this.wait();
         }
         permissions += permits;
-        notifyAll();
+        this.notifyAll();
     }
 
     @Override
     public synchronized void release() throws InterruptedException {
         while (permissions == 0) {
-            wait();
+            this.wait();
         }
         permissions--;
-        notifyAll();
+        this.notifyAll();
     }
 
     @Override
-    public void release(int permits) throws InterruptedException {
+    public synchronized void release(int permits) throws InterruptedException {
         while (permissions == 0) {
-            wait();
+            this.wait();
         }
         permissions -= permits;
-        notifyAll();
+        this.notifyAll();
     }
 
     @Override
