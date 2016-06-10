@@ -36,7 +36,7 @@ public class SquareSumImpl implements SquareSum {
         for (int i = 0; i < numberOfThreads; i++) {
             Callable<Long> task = () -> {
                 System.out.println(Thread.currentThread().getName() + " starts working.");
-                long sum1 = 0L;
+                long result = 0L;
                 int cutBegin = stepStartPosition;
                 int cutEnd;
                 synchronized (lock) {
@@ -48,11 +48,11 @@ public class SquareSumImpl implements SquareSum {
                 }
 
                 while (cutBegin < cutEnd) {
-                    sum1 += values[cutBegin] * values[cutBegin];
+                    result += values[cutBegin] * values[cutBegin];
                     cutBegin++;
                 }
-                System.out.println(Thread.currentThread().getName() + " got result " + sum1);
-                return sum1;
+                System.out.println(Thread.currentThread().getName() + " got result " + result);
+                return result;
             };
             tasks.add(task);
         }
