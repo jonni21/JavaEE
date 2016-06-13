@@ -1,4 +1,4 @@
-package module2.test;
+package module3_2.test;
 
 import module3_2.SquareSum;
 import module3_2.SquareSumImpl;
