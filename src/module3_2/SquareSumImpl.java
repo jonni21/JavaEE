@@ -60,14 +60,14 @@ public class SquareSumImpl implements SquareSum {
         }
     }
 
-    class Task implements Callable<Long> {
+    private class Task implements Callable<Long> {
         Phaser phaser;
         final int[] values;
         final int step;
         final int startPosition;
         long result = 0L;
 
-        public Task(int[] values, int step, int startPosition, Phaser phaser) {
+        Task(int[] values, int step, int startPosition, Phaser phaser) {
             this.values = values;
             this.step = step;
             this.startPosition = startPosition;
