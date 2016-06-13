@@ -26,7 +26,7 @@ public class SquareSumPerfomanceEvaluator {
         System.out.println("Time elapsed: " + (System.currentTimeMillis() - time));
         System.out.println("----------------------------");
         time = System.currentTimeMillis();
-        System.out.println(squareSumImpl.getSquareSum(intArray, 4));
+        System.out.println(squareSumImpl.getSquareSum(intArray, 6));
         System.out.println("Time elapsed: " + (System.currentTimeMillis() - time));
         System.gc();
     }

@@ -3,16 +3,13 @@ package module3_2;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.stream.IntStream;
 
 /**
  * Класс SquareSumImpl считает сумму квадратов элементов массива
  * в заданном количестве потоков.
  */
 public class SquareSumImpl implements SquareSum {
-    private volatile int stepStartPosition = 0;
-    private volatile int arrayLength;
-    private volatile int threadsQuantity;
-    private final Object lock = new Object();
 
     /**
      * Принимает целочисленный массив и возвращает сумму квадратов его элементов.
@@ -25,44 +22,31 @@ public class SquareSumImpl implements SquareSum {
     @Override
     public long getSquareSum(int[] values, int numberOfThreads) throws InterruptedException, ExecutionException {
         List<Callable<Long>> tasks = new ArrayList<>();
-        arrayLength = values.length;
-        threadsQuantity = numberOfThreads;
-        long sum = 0;
+        Phaser phaser = new Phaser();
+        int length = values.length;
+        int threads = numberOfThreads;
+        int startPosition = 0;
+        int step;
+        long sum = 0L;
 
-        if (values.length == 0) return 0L;
+        if (values.length == 0 || numberOfThreads <= 0) return 0L;
 
         if (values.length < numberOfThreads) numberOfThreads = values.length;
 
         for (int i = 0; i < numberOfThreads; i++) {
-            Callable<Long> task = () -> {
-                System.out.println(Thread.currentThread().getName() + " starts working.");
-                long result = 0L;
-                int cutBegin = stepStartPosition;
-                int cutEnd;
-                synchronized (lock) {
-                    int step = getStep(arrayLength, threadsQuantity);
-                    arrayLength -= step;
-                    threadsQuantity--;
-                    cutEnd = cutBegin + step;
-                    stepStartPosition += step;
-                }
-
-                while (cutBegin < cutEnd) {
-                    result += values[cutBegin] * values[cutBegin];
-                    cutBegin++;
-                }
-                System.out.println(Thread.currentThread().getName() + " got result " + result);
-                return result;
-            };
-            tasks.add(task);
+            phaser.register();
+            step = getStep(length, threads--);
+            length -= step;
+            tasks.add(new Task(values, step, startPosition, phaser));
+            startPosition += step;
         }
 
-        stepStartPosition = 0;
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
         List<Future<Long>> results = executorService.invokeAll(tasks);
 
         for (Future<Long> result : results) {
             sum += result.get();
+            phaser.arriveAndDeregister();
         }
         executorService.shutdown();
         return sum;
@@ -73,6 +57,30 @@ public class SquareSumImpl implements SquareSum {
             return length / threads + 1;
         } else {
             return length / threads;
+        }
+    }
+
+    class Task implements Callable<Long> {
+        Phaser phaser;
+        final int[] values;
+        final int step;
+        final int startPosition;
+        long result = 0L;
+
+        public Task(int[] values, int step, int startPosition, Phaser phaser) {
+            this.values = values;
+            this.step = step;
+            this.startPosition = startPosition;
+            this.phaser = phaser;
+        }
+
+        @Override
+        public Long call() throws Exception {
+            for (int i = startPosition; i < startPosition + step; i++) {
+                result += values[i] * values[i];
+            }
+            phaser.arrive();
+            return result;
         }
     }
 }
